@@ -46,7 +46,7 @@ typedef struct{
   char title[MAX_TEXT_LEN];
   char label[MAX_TEXT_LEN];
   char name[MAX_TEXT_LEN];
-  unsigned char icon[ICON_WIDTH * ((ICON_WIDTH + 7)/ 8)];
+  unsigned char icon[ICON_WIDTH * ((ICON_WIDTH + 7) / 8)];
 } NOTIFY_MESSAGE;
 
 typedef struct{
