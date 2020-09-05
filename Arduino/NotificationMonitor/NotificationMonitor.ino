@@ -217,7 +217,7 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   
           // iconがある場合は、バイト配列に変換して格納
           const char *icon = json_notify["icon"];
-          if( icon != NULL && strlen(icon) == ICON_WIDTH * ICON_WIDTH / 8 * 2 )
+          if( icon != NULL && strlen(icon) == ICON_WIDTH * ((ICON_WIDTH + 7) / 8) * 2 )
             parse_hex(icon, notify_message[index].icon);
           else
             memset(notify_message[index].icon, 0x00, sizeof(notify_message[index].icon));
