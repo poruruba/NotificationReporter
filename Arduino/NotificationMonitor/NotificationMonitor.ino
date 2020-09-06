@@ -219,7 +219,7 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
           strncpy( notify_message[index].name, name, sizeof(notify_message[index].name) - 1 );
           strncpy( notify_message[index].title, title, sizeof(notify_message[index].title) - 1 );
           strncpy( notify_message[index].label, label, sizeof(notify_message[index].label) - 1 );
-strncpy(notify_message[index].ticker,ticker,sizeof(notify_message[index].ticker)-1);
+          strncpy( notify_message[index].ticker, ticker, sizeof(notify_message[index].ticker) - 1);
   
           // iconがある場合は、バイト配列に変換して格納
           const char *icon = json_notify["icon"];
