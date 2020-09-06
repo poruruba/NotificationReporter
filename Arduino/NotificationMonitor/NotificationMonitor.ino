@@ -44,6 +44,7 @@ const char* topic = "android/notify"; // Notify受信用トピック名
 
 typedef struct{
   char title[MAX_TEXT_LEN];
+  char ticker[MAX_TEXT_LEN];
   char label[MAX_TEXT_LEN];
   char name[MAX_TEXT_LEN];
   unsigned char icon[ICON_WIDTH * ((ICON_WIDTH + 7) / 8)];
@@ -58,7 +59,7 @@ NOTIFY_MESSAGE notify_message[NUM_OF_NOTIFY];
 NOTIFY_INDEX notify_list[NUM_OF_NOTIFY];
 int notify_index = -1; // 現在表示位置
 
-const int capacity = JSON_OBJECT_SIZE(8);
+const int capacity = JSON_OBJECT_SIZE(9);
 StaticJsonDocument<capacity> json_notify;
 
 WiFiClient espClient;
@@ -134,6 +135,7 @@ void updateNotify(void){
   Serial.println(notify_message[index].name);
   Serial.println(notify_message[index].title);
   Serial.println(notify_message[index].label);
+  Serial.println(notify_message[index].ticker);
 
   // アイコンを表示
   drawMono(0, 0, ICON_WIDTH, ICON_WIDTH, notify_message[index].icon);
@@ -145,7 +147,8 @@ void updateNotify(void){
   M5.Lcd.print(notify_list[notify_index].id);
   drawJPChar(0, 32 + 0, notify_message[index].label);
   drawJPChar(0, 32 + 8, notify_message[index].title);
-  drawJPChar(0, 32 + 16, notify_message[index].name);
+  drawJPChar(0, 32 + 16, notify_message[index].ticker);
+  drawJPChar(0, 32 + 24, notify_message[index].name);
 }
 
 // MQTT Subscribeで受信した際のコールバック関数
@@ -208,12 +211,15 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
           const char *title = json_notify["title"];
           const char *name = json_notify["name"];
           const char *label = json_notify["label"];
+          const char *ticker = json_notify["ticker"];
           notify_message[index].name[sizeof(notify_message[index].name) - 1] = '\0';
           notify_message[index].title[sizeof(notify_message[index].title) - 1] = '\0';
           notify_message[index].label[sizeof(notify_message[index].label) - 1] = '\0';
+          notify_message[index].ticker[sizeof(notify_message[index].ticker) - 1] = '\0';
           strncpy( notify_message[index].name, name, sizeof(notify_message[index].name) - 1 );
           strncpy( notify_message[index].title, title, sizeof(notify_message[index].title) - 1 );
           strncpy( notify_message[index].label, label, sizeof(notify_message[index].label) - 1 );
+strncpy(notify_message[index].ticker,ticker,sizeof(notify_message[index].ticker)-1);
   
           // iconがある場合は、バイト配列に変換して格納
           const char *icon = json_notify["icon"];
