@@ -161,6 +161,7 @@ public class NotificationReporterService extends NotificationListenerService {
                 if (title != null) message_json.put("title", title);
                 if (subText != null) message_json.put("subtext", subText);
                 if( label != null ) message_json.put("label", label);
+                if( tickerText != null ) message_json.put("ticker", tickerText);
 
                 mqttClient.publish(topic, message_json.toString().getBytes(), 0, false);
             }
