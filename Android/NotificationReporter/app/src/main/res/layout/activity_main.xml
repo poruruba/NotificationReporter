@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="通知を転送するアプリの選択"
+        android:layout_margin="5dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <ListView
